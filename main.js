@@ -1,6 +1,6 @@
 
 
-const url = 'https://638a80f081df38ab345742af.mockapi.io/api/users';
+const url = 'https://6398b453fe03352a94dbe15d.mockapi.io/api/empleados';
 
 
 function crearElemento(elemento) {
@@ -13,8 +13,16 @@ function append(padre, hijo) {
 function getElementoBiId(id) {
     return document.getElementById(id);
 }
- function innerHTML(element,dentro){
+ function inner(element,dentro){
     return element.innerHTML = dentro
+ }
+
+function crearfila(){
+    return crearElemento('tr');
+}
+
+ function crearCelda(){
+    return crearElemento('td');
  }
 
 let tabla = getElementoBiId('datos');
@@ -25,24 +33,27 @@ async function obtenerdatos(){
    
 
     data.forEach(element => {
-        let fila = crearElemento('tr');
-        let celdaImagen = crearElemento('td');
-        let imagen = crearElemento('img');
-        let nombre = crearElemento('td');
-        let puesto = crearElemento('td');
-        innerHTML(puesto,element.trabajo)
-        innerHTML(nombre,`${element.nombre} ${element.apellido}`);
-        imagen.src = element.persona;
-        append(celdaImagen,imagen);
-        append(fila,celdaImagen);
+        let fila = crearfila();
+        let nombre = crearCelda();
+        let area =crearCelda();
+        let domicilio = crearCelda();
+        let id = crearCelda();
+        let btn = crearElemento(`button`);
+        inner(nombre,`${element.nombre} ${element.apellido}`);
+        inner(area,element.area);
+        inner(domicilio,element.domicilio);
+        inner(id,element.id);
+        inner(btn,'Ver Imagen');
         append(fila,nombre);
-        append(fila,puesto);
+        append(fila,area);
+        append(fila,domicilio);
+        append(fila,id);    
         append(tabla,fila);
-
-        
+        append(fila,btn);
         
     });
 
+    console.log(data);
 
 };
 
