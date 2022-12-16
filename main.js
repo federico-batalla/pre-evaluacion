@@ -1,8 +1,9 @@
 
 
-const url = 'https://6398b453fe03352a94dbe15d.mockapi.io/api/empleados';
+const urlGet = 'https://6398b453fe03352a94dbe15d.mockapi.io/api/empleados';
 
 
+//--------------------funciones---------------------
 function crearElemento(elemento) {
     return document.createElement(elemento);
 }
@@ -24,15 +25,15 @@ function crearfila(){
  function crearCelda(){
     return crearElemento('td');
  }
-
+//--------elementos html
 let tabla = getElementoBiId('datos');
 let divTabla = getElementoBiId('divTabla');
 let divDetalle = getElementoBiId('divDetalle');
 let divPadre = getElementoBiId('divPadre');
 
-
+//------------------------------
 async function obtenerdatos(){
-    let resp = await fetch(url);
+    let resp = await fetch(urlGet);
     let data = await resp.json();
    
     //por cada persona
@@ -70,10 +71,9 @@ async function obtenerdatos(){
     let btns = document.querySelectorAll(".btn");
     
     btns.forEach(elemento=>{
-        elemento.addEventListener('click',(e)=>{
-            
+        elemento.addEventListener('click',(e)=>{            
             mostrarDetalle(e.target.id);
-            console.log(e.target.id);           
+            //se modifican los css al presionar el boton           
             divDetalle.classList.remove('oculto');
             divPadre.classList.add('btn');
         });
@@ -82,28 +82,30 @@ async function obtenerdatos(){
     
 
 };
-
+//--------------------------------------------
 async function mostrarDetalle(id){
     let resp = await fetch("https://6398b453fe03352a94dbe15d.mockapi.io/api/empleados/"+id)
     let data = await resp.json();
-
+    //se crea el parrafo y la imagen
     let img = crearElemento('img');
-    let p = crearElemento('p');    
+    let p = crearElemento('p');  
+    //se agrega la src de la img y el contenido del parrrafo  
     img.src = data.foto;
     inner(p,
         `Nombre: ${data.nombre} ${data.apellido} 
          - Area: ${data.area}   
          - Domicilio : ${data.domicilio} 
          - Id: ${data.id}`);
+    //se limpia el div y se coloca la imagen y el parrafo     
     inner(divDetalle,"");
     append(divDetalle,img);
     append(divDetalle,p);
-    console.log(data);
+    
     
    
 };
 
-
+// datos para actualizar api
 let datos ={
     "nombre":"Federico Matias",
     "apellido":"Batalla",
@@ -111,21 +113,24 @@ let datos ={
     "domicilio":"Ushuaia 123",
     "foto":"https://turismoushuaia.com/wp-content/uploads/2018/12/ABW4036-1-1024x684.jpg",
     "id":"15"
-}
-
+};
+//-----------------------------------------------
 async function modificarDatos(datos){
     let resp = await fetch("https://6398b453fe03352a94dbe15d.mockapi.io/api/empleados/"+datos.id, {
         method: "PUT",
         body:JSON.stringify(datos),
         headers:{"Content-type":"application/json"}
     });
-    let data = await resp.json();
+    //se muestarn por consola los datos a actualizar
+    const data = await resp.json();
+    console.log(data);
         
-}
+};
 
+//main
+obtenerdatos();
+modificarDatos(datos);
 
- obtenerdatos();
- modificarDatos()
 
 
 
