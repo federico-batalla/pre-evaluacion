@@ -8,6 +8,7 @@ function crearElemento(elemento) {
     return document.createElement(elemento);
 }
 
+
 function append(padre, hijo) {
     return padre.appendChild(hijo);
 }
