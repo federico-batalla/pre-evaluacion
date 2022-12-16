@@ -38,19 +38,20 @@ async function obtenerdatos(){
         let area =crearCelda();
         let domicilio = crearCelda();
         let id = crearCelda();
+        let celdabtn = crearCelda();
         let btn = crearElemento(`button`);
         inner(nombre,`${element.nombre} ${element.apellido}`);
         inner(area,element.area);
         inner(domicilio,element.domicilio);
         inner(id,element.id);
-        inner(btn,'Ver Imagen');
+        inner(btn,'Ver Empleado');
+        append(celdabtn,btn)
         append(fila,nombre);
         append(fila,area);
         append(fila,domicilio);
         append(fila,id);    
+        append(fila,celdabtn);
         append(tabla,fila);
-        append(fila,btn);
-        
     });
 
     console.log(data);
