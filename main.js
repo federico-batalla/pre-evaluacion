@@ -26,13 +26,18 @@ function crearfila(){
  }
 
 let tabla = getElementoBiId('datos');
+let divTabla = getElementoBiId('divTabla');
+let divDetalle = getElementoBiId('divDetalle');
+let divPadre = getElementoBiId('divPadre');
+
 
 async function obtenerdatos(){
     let resp = await fetch(url);
     let data = await resp.json();
    
-
+    //por cada persona
     data.forEach(element => {
+        //se crean y se capturan lo elementos html en variables
         let fila = crearfila();
         let nombre = crearCelda();
         let area =crearCelda();
@@ -40,28 +45,37 @@ async function obtenerdatos(){
         let id = crearCelda();
         let celdabtn = crearCelda();
         let btn = crearElemento(`button`);
-        btn.classList.add('btn');
+        
+        // se agregan el contenido   a cada elemento
         inner(nombre,`${element.nombre} ${element.apellido}`);
         inner(area,element.area);
         inner(domicilio,element.domicilio);
         inner(id,element.id);
         inner(btn,'Ver Empleado');
+        // se le agregan las clases e id a todos los botones
+        btn.classList.add('btn');
+        btn.id=element.id;
+        // se agregan las celdas a la fila
         append(celdabtn,btn)
         append(fila,nombre);
         append(fila,area);
         append(fila,domicilio);
         append(fila,id);    
         append(fila,celdabtn);
+        //se agrega la fila  a la tabla
         append(tabla,fila);
 
     });
-
+    // se agrega los eventos click a todos lo botones
     let btns = document.querySelectorAll(".btn");
-    console.log(btns);
+    
     btns.forEach(elemento=>{
         elemento.addEventListener('click',(e)=>{
-            console.log('hola');
+            
             mostrarDetalle(e.target.id);
+            console.log(e.target.id);           
+            divDetalle.classList.remove('oculto');
+            divPadre.classList.add('btn');
         });
     });
 
@@ -69,7 +83,25 @@ async function obtenerdatos(){
 
 };
 
+async function mostrarDetalle(id){
+    let resp = await fetch("https://6398b453fe03352a94dbe15d.mockapi.io/api/empleados/"+id)
+    let data = await resp.json();
 
+    let img = crearElemento('img');
+    let p = crearElemento('p');    
+    img.src = data.foto;
+    inner(p,
+        `Nombre: ${data.nombre} ${data.apellido} 
+         - Area: ${data.area}   
+         - Domicilio : ${data.domicilio} 
+         - Id: ${data.id}`);
+    inner(divDetalle,"");
+    append(divDetalle,img);
+    append(divDetalle,p);
+    console.log(data);
+    
+   
+}
 
 
 
