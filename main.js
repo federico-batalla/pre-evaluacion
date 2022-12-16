@@ -101,11 +101,31 @@ async function mostrarDetalle(id){
     console.log(data);
     
    
+};
+
+
+let datos ={
+    "nombre":"Federico Matias",
+    "apellido":"Batalla",
+    "area":"Response",
+    "domicilio":"Ushuaia 123",
+    "foto":"https://turismoushuaia.com/wp-content/uploads/2018/12/ABW4036-1-1024x684.jpg",
+    "id":"15"
+}
+
+async function modificarDatos(datos){
+    let resp = await fetch("https://6398b453fe03352a94dbe15d.mockapi.io/api/empleados/"+datos.id, {
+        method: "PUT",
+        body:JSON.stringify(datos),
+        headers:{"Content-type":"application/json"}
+    });
+    let data = await resp.json();
+        
 }
 
 
-
  obtenerdatos();
+ modificarDatos()
 
 
 
