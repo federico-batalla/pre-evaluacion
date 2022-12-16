@@ -40,6 +40,7 @@ async function obtenerdatos(){
         let id = crearCelda();
         let celdabtn = crearCelda();
         let btn = crearElemento(`button`);
+        btn.classList.add('btn');
         inner(nombre,`${element.nombre} ${element.apellido}`);
         inner(area,element.area);
         inner(domicilio,element.domicilio);
@@ -52,13 +53,50 @@ async function obtenerdatos(){
         append(fila,id);    
         append(fila,celdabtn);
         append(tabla,fila);
+
     });
 
-    console.log(data);
+    let btns = document.querySelectorAll(".btn");
+    console.log(btns);
+    btns.forEach(elemento=>{
+        elemento.addEventListener('click',(e)=>{
+            console.log('hola');
+            mostrarDetalle(e.target.id);
+        });
+    });
+
+    
 
 };
 
-obtenerdatos();
+
+
+
+
+ obtenerdatos();
+
+
+
+    
+
+
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 
